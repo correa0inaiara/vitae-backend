@@ -36,8 +36,6 @@ exports.saveQuestao = async function (questionarioId, questao) {
 
 exports.updateQuestao = async function(questoesId, questao) {
 	const [text, values] =  mapFields(questoesId, 'questoesId', questao, 'questoes');
-    console.log("🚀 ~ file: questaoData.js ~ line 39 ~ exports.updateQuestao=function ~ text", text)
-    console.log("🚀 ~ file: questaoData.js ~ line 39 ~ exports.updateQuestao=function ~ values", values)
 
 	try {
 		const res = await database.query(text, values);
