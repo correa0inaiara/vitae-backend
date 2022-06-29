@@ -1,7 +1,7 @@
 const userData = require('../data/userData');
-const contatoData = require('../data/contatoData');
-const enderecoData = require('../data/enderecoData');
-const redesocialData = require('../data/redesocialData');
+// const contatoData = require('../data/contatoData');
+// const enderecoData = require('../data/enderecoData');
+// const redesocialData = require('../data/redesocialData');
 
 exports.getUsers = async function () {
 	return await userData.getUsers();
