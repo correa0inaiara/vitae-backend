@@ -32,7 +32,7 @@ const tiposContratacaoEBeneficiosRoutes = require('./route/tiposContratacaoEBene
  */
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
-	res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:3000')
+	res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL)
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Token')
 	next()
 })
