@@ -16,7 +16,6 @@ exports.getCurriculos = async function () {
 }
 
 exports.getCurriculo = async function (usuarioId) {
-	// return await curriculoData.getCurriculo(id);
 
 	const curriculos =  await curriculoData.getCurriculo(usuarioId);
 	
@@ -73,7 +72,6 @@ exports.saveCurriculo = async function (usuarioId, data) {
 	const curriculoId = curriculo[0].curriculoid
 	
 	if (curriculoId) {
-		// const cursos =  await curriculoData.saveCurriculo(usuarioId, curriculoData);
 		let [cursos, educacao, experiencias, habilidades, idiomas] = await Promise.all(
 			[cursoService.saveCurso(curriculoId, data.cursos),
 			educacaoService.saveEducacao(curriculoId, data.educacao),
@@ -94,12 +92,12 @@ exports.saveCurriculo = async function (usuarioId, data) {
 exports.updateCurriculo = async function (curriculoId, data) {
 
 	const cursosArr = data.cursos.cursos
-	const cursosAdicionadas = data.cursos.cursosAdicionados
-	const cursosExcluidas = data.cursos.cursosExcluidos
+	const cursosAdicionados = data.cursos.cursosAdicionados
+	const cursosExcluidos = data.cursos.cursosExcluidos
 
 	const educacaoArr = data.educacao.educacao
-	const educacaoAdicionadas = data.educacao.educacaoAdicionados
-	const educacaoExcluidas = data.educacao.educacaoExcluidos
+	const educacaoAdicionados = data.educacao.educacaoAdicionados
+	const educacaoExcluidos = data.educacao.educacaoExcluidos
 
 	const experienciasArr = data.experiencias.experiencias
 	const experienciasAdicionadas = data.experiencias.experienciasAdicionadas
@@ -110,9 +108,8 @@ exports.updateCurriculo = async function (curriculoId, data) {
 	const habilidadesExcluidas = data.habilidades.habilidadesExcluidas
 	
 	const idiomasArr = data.idiomas.idiomas
-	const idiomasAdicionadas = data.idiomas.idiomasAdicionados
-	const idiomasExcluidas = data.idiomas.idiomasExcluidos
-
+	const idiomasAdicionados = data.idiomas.idiomasAdicionados
+	const idiomasExcluidos = data.idiomas.idiomasExcluidos
 
 
 	let curriculoDataObj = {
@@ -130,7 +127,7 @@ exports.updateCurriculo = async function (curriculoId, data) {
 				let cursoObj = {
 					curso: item.curso,
 					localizacao: item.localizacao,
-					duracaoEmHoras: item.duracaoEmHoras
+					duracaoemhoras: item.duracaoemhoras
 				}
 				const cursos = await cursoService.updateCurso(item.cursoId, cursoObj)
 			}
@@ -138,22 +135,20 @@ exports.updateCurriculo = async function (curriculoId, data) {
 	}
 
 	let addCursos = []
-	if (cursosAdicionadas && cursosAdicionadas.length > 0) {
-		cursosAdicionadas.map(async item => {
-			console.log("🚀 ~ file: curriculoService.js ~ line 186 ~ item", item)
+	if (cursosAdicionados && cursosAdicionados.length > 0) {
+		cursosAdicionados.map(async item => {
 			let cursoObj = {
 				curso: item.curso,
 				localizacao: item.localizacao,
-				duracaoEmHoras: item.duracaoEmHoras
+				duracaoemhoras: item.duracaoemhoras
 			}
 			const result = await cursoService.saveCurso(curriculoId, cursoObj);
-            console.log("🚀 ~ file: curriculoService.js ~ line 184 ~ result", result)
 		})
 	}
 
 	let delCursos = []
-	if (cursosExcluidas && cursosExcluidas.length > 0) {
-		cursosExcluidas.map(async item => {
+	if (cursosExcluidos && cursosExcluidos.length > 0) {
+		cursosExcluidos.map(async item => {
 			const result = await cursoService.deleteCurso(item.cursoid);
 		})
 	}
@@ -166,8 +161,8 @@ exports.updateCurriculo = async function (curriculoId, data) {
 				let educacaoObj = {
 					educacao: item.educacao,
 					localizacao: item.localizacao,
-					periodoInicial: item.periodoInicial,
-					periodoFinal: item.periodoFinal
+					periodoinicial: item.periodoinicial,
+					periodofinal: item.periodofinal
 				}
 				const experiencias = await educacaoService.updateEducacao(item.educacaoId, educacaoObj)
 			}
@@ -175,23 +170,21 @@ exports.updateCurriculo = async function (curriculoId, data) {
 	}
 
 	let addEducacao = []
-	if (educacaoAdicionadas && educacaoAdicionadas.length > 0) {
-		educacaoAdicionadas.map(async item => {
-			console.log("🚀 ~ file: curriculoService.js ~ line 186 ~ item", item)
+	if (educacaoAdicionados && educacaoAdicionados.length > 0) {
+		educacaoAdicionados.map(async item => {
 			let educacaoObj = {
 				educacao: item.educacao,
 				localizacao: item.localizacao,
-				periodoInicial: item.periodoInicial,
-				periodoFinal: item.periodoFinal
+				periodoinicial: item.periodoinicial,
+				periodofinal: item.periodofinal
 			}
 			const result = await educacaoService.saveEducacao(curriculoId, educacaoObj);
-            console.log("🚀 ~ file: curriculoService.js ~ line 184 ~ result", result)
 		})
 	}
 
 	let delEducacao = []
-	if (educacaoExcluidas && educacaoExcluidas.length > 0) {
-		educacaoExcluidas.map(async item => {
+	if (educacaoExcluidos && educacaoExcluidos.length > 0) {
+		educacaoExcluidos.map(async item => {
 			const result = await educacaoService.deleteEducacao(item.experienciaid);
 		})
 	}
@@ -204,8 +197,8 @@ exports.updateCurriculo = async function (curriculoId, data) {
 				let experienciasObj = {
 					cargo: item.cargo,
 					empresa: item.empresa,
-					periodoInicial: item.periodoInicial,
-					periodoFinal: item.periodoFinal
+					periodoinicial: item.periodoinicial,
+					periodofinal: item.periodofinal
 				}
 				const experiencias = await experienciaService.updateExperiencia(item.experienciaId, experienciasObj)
 			}
@@ -215,15 +208,13 @@ exports.updateCurriculo = async function (curriculoId, data) {
 	let addExperiencias = []
 	if (experienciasAdicionadas && experienciasAdicionadas.length > 0) {
 		experienciasAdicionadas.map(async item => {
-			console.log("🚀 ~ file: curriculoService.js ~ line 186 ~ item", item)
 			let experienciasObj = {
 				cargo: item.cargo,
 				empresa: item.empresa,
-				periodoInicial: item.periodoInicial,
-				periodoFinal: item.periodoFinal
+				periodoinicial: item.periodoinicial,
+				periodofinal: item.periodofinal
 			}
 			const result = await experienciaService.saveExperiencia(curriculoId, experienciasObj);
-            console.log("🚀 ~ file: curriculoService.js ~ line 184 ~ result", result)
 		})
 	}
 
@@ -251,13 +242,11 @@ exports.updateCurriculo = async function (curriculoId, data) {
 	let addHabilidades = []
 	if (habilidadesAdicionadas && habilidadesAdicionadas.length > 0) {
 		habilidadesAdicionadas.map(async item => {
-			console.log("🚀 ~ file: curriculoService.js ~ line 186 ~ item", item)
 			let habilidadesObj = {
 				habilidade: item.habilidade,
 				nivel: item.nivel
 			}
 			const result = await habilidadeService.saveHabilidade(curriculoId, habilidadesObj);
-            console.log("🚀 ~ file: curriculoService.js ~ line 184 ~ result", result)
 		})
 	}
 
@@ -283,21 +272,19 @@ exports.updateCurriculo = async function (curriculoId, data) {
 	}
 
 	let addIdiomas = []
-	if (idiomasAdicionadas && idiomasAdicionadas.length > 0) {
-		idiomasAdicionadas.map(async item => {
-			console.log("🚀 ~ file: curriculoService.js ~ line 186 ~ item", item)
+	if (idiomasAdicionados && idiomasAdicionados.length > 0) {
+		idiomasAdicionados.map(async item => {
 			let idiomasObj = {
 				idioma: item.idioma,
 				nivel: item.nivel
 			}
 			const result = await idiomaService.saveIdioma(curriculoId, idiomasObj);
-            console.log("🚀 ~ file: curriculoService.js ~ line 184 ~ result", result)
 		})
 	}
 
 	let delIdiomas = []
-	if (idiomasExcluidas && idiomasExcluidas.length > 0) {
-		idiomasExcluidas.map(async item => {
+	if (idiomasExcluidos && idiomasExcluidos.length > 0) {
+		idiomasExcluidos.map(async item => {
 			const result = await idiomaService.deleteIdioma(item.idiomaid);
 		})
 	}

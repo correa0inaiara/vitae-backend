@@ -23,12 +23,8 @@ exports.getExperiencia = async function (curriculoId) {
 }
 
 exports.saveExperiencia = async function (curriculoId, experiencia) {
-	
-	// experiencia.periodoInicial = handleDates(experiencia.periodoInicial);
-	// experiencia.periodoFinal = handleDates(experiencia.periodoFinal);
-
 	const text = "INSERT INTO experiencias (curriculoId, cargo, periodoInicial, periodoFinal, empresa) VALUES ($1, $2, $3, $4, $5) returning *"
-	const values = [curriculoId, experiencia.cargo, experiencia.periodoInicial, experiencia.periodoFinal, experiencia.empresa];
+	const values = [curriculoId, experiencia.cargo, experiencia.periodoinicial, experiencia.periodofinal, experiencia.empresa];
 
 	try {
 		const res = await database.query(text, values);
@@ -39,12 +35,6 @@ exports.saveExperiencia = async function (curriculoId, experiencia) {
 }
 
 exports.updateExperiencia = async function(experienciaID, experiencia) {
-
-	// if (experiencia.periodoInicial && experiencia.periodoFinal) {
-	// 	experiencia.periodoInicial = handleDates(experiencia.periodoInicial);
-	// 	experiencia.periodoFinal = handleDates(experiencia.periodoFinal);
-	// }
-
 	const [text, values] =  mapFields(experienciaID, 'experienciaId', experiencia, 'experiencias');
 
 	try {

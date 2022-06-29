@@ -25,7 +25,7 @@ exports.getEducacaoById = async function (curriculoId) {
 exports.saveEducacao = async function (curriculoId, educacao) {
 	
 	const text = "INSERT INTO educacao (curriculoId, educacao, localizacao, periodoInicial, periodoFinal) VALUES ($1, $2, $3, $4, $5) returning *"
-	const values = [curriculoId, educacao.educacao, educacao.localizacao, educacao.periodoInicial, educacao.periodoFinal];
+	const values = [curriculoId, educacao.educacao, educacao.localizacao, educacao.periodoinicial, educacao.periodofinal];
 
 	try {
 		const res = await database.query(text, values);

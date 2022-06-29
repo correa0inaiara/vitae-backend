@@ -30,9 +30,12 @@ const tiposContratacaoEBeneficiosRoutes = require('./route/tiposContratacaoEBene
 /**
  * CORS
  */
+// const origin = 'https://app-sistema-vagas-frontend.herokuapp.com'
+const origin = 'http://localhost:3000'
+
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
-	res.header('Access-Control-Allow-Origin', 'https://app-sistema-vagas-frontend.herokuapp.com')
+	res.header('Access-Control-Allow-Origin', origin)
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Token')
 	next()
 })
