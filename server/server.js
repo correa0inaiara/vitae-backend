@@ -31,8 +31,8 @@ const questoesRespondidasRoutes = require('./route/questoesRespondidasRoutes')
 /**
  * CORS
  */
-// const origin = 'https://app-sistema-vagas-frontend.herokuapp.com'
-const origin = 'http://localhost:3000'
+const origin = 'https://app-sistema-vagas-frontend.herokuapp.com'
+// const origin = 'http://localhost:3000'
 
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
