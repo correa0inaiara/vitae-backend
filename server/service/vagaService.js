@@ -23,23 +23,24 @@ exports.getVagas = async function () {
 
 				item.tipoContratacao = contratacao.contratacao
 
-				const questionarios = await questionarioService.getQuestionario(item.empresaid);
+				if (item.questionarioid) {
+					const questionarios = await questionarioService.getQuestionario(item.empresaid);
 
-				if (questionarios && questionarios.length > 0) {
-					let questionariosArr = []
-					questionarios.map(item => {
-						const questionarioObj = item.questionario
-						questionariosArr.push({
-							nome: questionarioObj.nome,
-							questionarioId: questionarioObj.questionarioid
+					if (questionarios && questionarios.length > 0) {
+						let questionariosArr = []
+						questionarios.map(item => {
+							const questionarioObj = item.questionario
+							questionariosArr.push({
+								nome: questionarioObj.nome,
+								questionarioId: questionarioObj.questionarioid
+							})
 						})
-					})
-					
-					const questionario = questionariosArr.find(item3 => item.questionarioid === item3.questionarioId)
-	
-					item.questionario = questionario.nome
+						
+						const questionario = questionariosArr.find(item3 => item.questionarioid === item3.questionarioId)
+		
+						item.questionario = questionario.nome
+					}
 				}
-
 
 				if (beneficiosOferecidosResult) {
 					vagaCompleto.push(
@@ -79,21 +80,23 @@ exports.getVaga = async function (empresaId) {
 
 				item.tipoContratacao = contratacao.contratacao
 
-				const questionarios = await questionarioService.getQuestionario(empresaId);
+				if (item.questionarioid) {
+					const questionarios = await questionarioService.getQuestionario(empresaId);
 
-				if (questionarios && questionarios.length > 0) {
-					let questionariosArr = []
-					questionarios.map(item => {
-						const questionarioObj = item.questionario
-						questionariosArr.push({
-							nome: questionarioObj.nome,
-							questionarioId: questionarioObj.questionarioid
+					if (questionarios && questionarios.length > 0) {
+						let questionariosArr = []
+						questionarios.map(item => {
+							const questionarioObj = item.questionario
+							questionariosArr.push({
+								nome: questionarioObj.nome,
+								questionarioId: questionarioObj.questionarioid
+							})
 						})
-					})
+						
+						const questionario = questionariosArr.find(item3 => item.questionarioid === item3.questionarioId)
 
-					const questionario = questionariosArr.find(item3 => item.questionarioid === item3.questionarioId)
-
-					item.questionario = questionario.nome
+						item.questionario = questionario.nome
+					}
 				}
 
 				if (beneficiosOferecidosResult) {
