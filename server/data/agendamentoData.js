@@ -24,7 +24,7 @@ exports.getAgendamento = async function (processoSeletivoId) {
 
 exports.getAgendamentosByCandidato = async function (usuarioId) {
 	const text = `
-		select u.usuarioid, a.agendamentoid, a.processoseletivoid, a.candidatoselecionadoid, a.motivo, a.dia, a.hora, a.localizacao  
+		select u.usuarioid, e.nomedaempresa, a.agendamentoid, a.processoseletivoid, a.candidatoselecionadoid, a.motivo, a.dia, a.hora, a.localizacao  
 		from agendamentos a
 		full join candidatosselecionados c
 		on a.candidatoselecionadoid = c.candidatoselecionadoid  
@@ -33,7 +33,11 @@ exports.getAgendamentosByCandidato = async function (usuarioId) {
 		full join candidatos c3 
 		on c2.candidatoid = c3.candidatoid 
 		full join usuarios u 
-		on c3.usuarioid = u.usuarioid 
+		on c3.usuarioid = u.usuarioid
+		full join processosseletivos p
+		on a.processoseletivoid = p.processoseletivoid 
+		full join empresas e 
+		on p.empresaid = e.empresaid 
 		where u.usuarioid = $1
 		and a.agendamentoid notnull;
 	`
@@ -48,7 +52,7 @@ exports.getAgendamentosByCandidato = async function (usuarioId) {
 
 exports.getAgendamentosByEmpresa = async function (usuarioId) {
 	const text = `
-		select u.usuarioid, a.agendamentoid, a.processoseletivoid, a.candidatoselecionadoid, a.motivo, a.dia, a.hora, a.localizacao  
+		select u.usuarioid, c3.nomecompleto, a.agendamentoid, a.processoseletivoid, a.candidatoselecionadoid, a.motivo, a.dia, a.hora, a.localizacao  
 		from agendamentos a
 		full join processosseletivos p
 		on a.processoseletivoid = p.processoseletivoid 
@@ -56,6 +60,12 @@ exports.getAgendamentosByEmpresa = async function (usuarioId) {
 		on p.empresaid = e.empresaid
 		full join usuarios u 
 		on e.usuarioid  = u.usuarioid 
+		full join candidatosselecionados c
+		on a.candidatoselecionadoid = c.candidatoselecionadoid  
+		full join candidaturas c2
+		on c.candidaturaid = c2.candidaturaid 
+		full join candidatos c3 
+		on c2.candidatoid = c3.candidatoid 
 		where u.usuarioid = $1
 		and a.agendamentoid notnull;
 	`
