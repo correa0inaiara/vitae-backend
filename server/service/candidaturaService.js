@@ -23,13 +23,11 @@ exports.getCandidaturasByVaga = async function (vagaId) {
 
 exports.getCandidaturaById = async function (candidaturaId) {
 	const candidatura = await candidaturaData.getCandidaturaById(candidaturaId);
-    console.log("🚀 ~ file: candidaturaService.js ~ line 26 ~ candidatura", candidatura)
 
 	const candidato = await candidatoData.getCandidatoById(candidatura[0].candidatoid)
 	candidatura[0].candidato = candidato[0]
 
 	const curriculo = await curriculoService.getCurriculoById(candidatura[0].curriculoid)
-    console.log("🚀 ~ file: candidaturaService.js ~ line 32 ~ curriculo", curriculo)
 	candidatura[0].curriculo = curriculo[0]
 
 	const vaga = await vagaData.getVagaById(candidatura[0].vagaid)

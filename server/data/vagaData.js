@@ -35,8 +35,6 @@ exports.getVaga = async function (empresaId) {
 
 exports.saveVaga = async function (empresaId, questionarioId, tipoContratacaoId, vaga) {
 	
-	// vaga.prazo = handleDates(vaga.prazo);
-
 	const text = "INSERT INTO vagas (empresaId, questionarioId, tipoContratacaoId, nome, descricao, localizacao, salario, prazo, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *"
 	const values = [empresaId, questionarioId, tipoContratacaoId, vaga.nome, vaga.descricao, vaga.localizacao, vaga.salario, vaga.prazo, vaga.status];
 	
@@ -49,10 +47,6 @@ exports.saveVaga = async function (empresaId, questionarioId, tipoContratacaoId,
 }
 
 exports.updateVaga = async function(id, vaga) {
-
-	// if (vaga.prazo) {
-	// 	vaga.prazo = handleDates(vaga.prazo);
-	// }
 
 	const [text, values] =  mapFields(id, 'vagaId', vaga, 'vagas');
 

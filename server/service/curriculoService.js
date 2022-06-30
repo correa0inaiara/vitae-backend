@@ -55,7 +55,6 @@ exports.getCurriculoById = async function (curriculoId) {
 		habilidadeData.getHabilidade(curriculoId),
 		idiomaData.getIdioma(curriculoId)])
 
-        console.log("🚀 ~ file: curriculoService.js ~ line 59 ~ curriculo", curriculo)
 		curriculo[0].cursos = cursos
 		curriculo[0].educacao = educacao
 		curriculo[0].experiencias = experiencias

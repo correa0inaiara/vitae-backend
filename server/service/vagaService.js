@@ -29,16 +29,17 @@ exports.getVagas = async function () {
 					if (questionarios && questionarios.length > 0) {
 						let questionariosArr = []
 						questionarios.map(item => {
-							const questionarioObj = item.questionario
+							const questionarioObj = item
 							questionariosArr.push({
-								nome: questionarioObj.nome,
-								questionarioId: questionarioObj.questionarioid
+								nome: questionarioObj.questionario.nome,
+								questionarioId: questionarioObj.questionario.questionarioid,
+								questoes: questionarioObj.questoes
 							})
 						})
 						
 						const questionario = questionariosArr.find(item3 => item.questionarioid === item3.questionarioId)
 		
-						item.questionario = questionario.nome
+						item.questionario = questionario
 					}
 				}
 

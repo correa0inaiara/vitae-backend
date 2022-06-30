@@ -26,6 +26,7 @@ const agendamentoRoutes = require('./route/agendamentoRoutes')
 const loginRoutes = require('./route/loginRoutes')
 const relatorioRoutes = require('./route/relatorioRoutes')
 const tiposContratacaoEBeneficiosRoutes = require('./route/tiposContratacaoEBeneficiosRoutes')
+const questoesRespondidasRoutes = require('./route/questoesRespondidasRoutes')
 
 /**
  * CORS
@@ -59,6 +60,7 @@ app.use('/habilidades', habilidadeRoutes);
 app.use('/experiencias', experienciaRoutes);
 app.use('/questionarios', questionarioRoutes);
 app.use('/questoes', questaoRoutes);
+app.use('/questoesrespondidas', questoesRespondidasRoutes);
 app.use('/questionariosrespondidos', questaoRespondidaRoutes);
 app.use('/vagas', vagaRoutes);
 app.use('/beneficiosoferecidos', beneficioOferecidoRoutes);

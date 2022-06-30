@@ -12,12 +12,10 @@ exports.getCurriculos = async function () {
 }
 
 exports.getCurriculoById = async function (curriculoId) {
-    console.log("🚀 ~ file: curriculoData.js ~ line 15 ~ curriculoId", curriculoId)
 	const text = "SELECT * FROM curriculos WHERE curriculoId = $1;"
 	const values = [curriculoId]
 	try {
 		const res = await database.query(text, values);
-        console.log("🚀 ~ file: curriculoData.js ~ line 19 ~ res", res)
 		return res.rows;
 	} catch (error) {
 		return error.stack;
