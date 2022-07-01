@@ -121,6 +121,10 @@ exports.getVaga = async function (empresaId) {
 	}
 }
 
+exports.getVagaById = async function (vagaId) {
+	return await vagaData.getVagaById(vagaId);
+}
+
 exports.saveVaga = async function (empresaId, questionarioId, tipoContratacaoId, vaga) {
 	return await vagaData.saveVaga(empresaId, questionarioId, tipoContratacaoId, vaga);
 }

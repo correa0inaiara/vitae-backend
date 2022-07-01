@@ -11,6 +11,17 @@ exports.getQuestionarios = async function () {
 	}
 }
 
+exports.getQuestionarioById = async function (questionarioId) {
+	const text = "SELECT * FROM questionarios WHERE questionarioId = $1;"
+	const values = [questionarioId]
+	try {
+		const res = await database.query(text, values);
+		return res.rows;
+	} catch (error) {
+		return error.stack;
+	}
+}
+
 exports.getQuestionario = async function (empresaId) {
 	const text = "SELECT * FROM questionarios WHERE empresaId = $1;"
 	const values = [empresaId]

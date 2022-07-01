@@ -6,6 +6,10 @@ exports.getQuestionarios = async function () {
 	return await questionarioData.getQuestionarios();
 }
 
+exports.getQuestionarioById = async function (questionarioId) {
+	return await questionarioData.getQuestionarioById(questionarioId);
+}
+
 exports.getQuestionario = async function (empresaId) {
 	const questionarioResult = await questionarioData.getQuestionario(empresaId);
 	let questionarioCompleto = []

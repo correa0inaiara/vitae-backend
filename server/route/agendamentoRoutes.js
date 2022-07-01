@@ -22,8 +22,8 @@ router.get('/:id', async function (req, res, next) {
 		if (req.headers.token) {
 			const decode = isAutenticated(req.headers.token)
 			if (decode) {
-				const usuarioId = req.params.id;
-				const agendamento = await agendamentoService.getAgendamento(usuarioId);
+				const processoSeletivoId = req.params.id;
+				const agendamento = await agendamentoService.getAgendamento(processoSeletivoId);
 				res.status(200).json(agendamento);
 			} else res.status(401).json({message: 'Falha na autenticação.'});
 		} else  res.status(401).json({message: 'Usuário não pode ser autenticado.'});

@@ -27,16 +27,18 @@ const loginRoutes = require('./route/loginRoutes')
 const relatorioRoutes = require('./route/relatorioRoutes')
 const tiposContratacaoEBeneficiosRoutes = require('./route/tiposContratacaoEBeneficiosRoutes')
 const questoesRespondidasRoutes = require('./route/questoesRespondidasRoutes')
+const exportRoutes = require('./route/exportRoutes')
 
 /**
  * CORS
  */
-const origin = 'https://app-sistema-vagas-frontend.herokuapp.com'
-// const origin = 'http://localhost:3000'
+// const remoteOrigin = 'https://app-sistema-vagas-frontend.herokuapp.com'
+const localOrigin = 'http://localhost:3000'
 
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
-	res.header('Access-Control-Allow-Origin', origin)
+	res.header('Access-Control-Allow-Origin', localOrigin)
+	// res.header('Access-Control-Allow-Origin', remoteOrigin)
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Token')
 	next()
 })
@@ -70,6 +72,7 @@ app.use('/processosseletivos', processoSeletivoRoutes);
 app.use('/agendamentos', agendamentoRoutes);
 app.use('/relatorios', relatorioRoutes);
 app.use('/tiposcontratacaoebeneficios', tiposContratacaoEBeneficiosRoutes);
+app.use('/export', exportRoutes);
 
 app.use(function (error, req, res, next) {
 	let code = 500;

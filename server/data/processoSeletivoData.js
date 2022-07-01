@@ -11,6 +11,17 @@ exports.getProcessosSeletivos = async function () {
 	}
 }
 
+exports.getProcessoSeletivoById = async function (processoSeletivoId) {
+	const text = "SELECT * FROM processosSeletivos WHERE processoSeletivoId = $1;"
+	const values = [processoSeletivoId]
+	try {
+		const res = await database.query(text, values);
+		return res.rows;
+	} catch (error) {
+		return error.stack;
+	}
+}
+
 exports.getProcessoSeletivo = async function (empresaId) {
 	const text = "SELECT * FROM processosSeletivos WHERE empresaId = $1;"
 	const values = [empresaId]

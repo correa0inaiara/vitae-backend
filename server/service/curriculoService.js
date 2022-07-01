@@ -10,6 +10,7 @@ const educacaoService = require('../service/educacaoService');
 const experienciaService = require('../service/experienciaService');
 const habilidadeService = require('../service/habilidadeService');
 const idiomaService = require('../service/idiomaService');
+const { exportToCSV } = require('../utils/utils');
 
 exports.getCurriculos = async function () {
 	return await curriculoData.getCurriculos();

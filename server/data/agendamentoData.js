@@ -11,6 +11,17 @@ exports.getAgendamentos = async function () {
 	}
 }
 
+exports.getAgendamentoById = async function (agendamentoId) {
+	const text = "SELECT * FROM agendamentos WHERE agendamentoId = $1;"
+	const values = [agendamentoId]
+	try {
+		const res = await database.query(text, values);
+		return res.rows;
+	} catch (error) {
+		return error.stack;
+	}
+}
+
 exports.getAgendamento = async function (processoSeletivoId) {
 	const text = "SELECT * FROM agendamentos WHERE processoSeletivoId = $1;"
 	const values = [processoSeletivoId]

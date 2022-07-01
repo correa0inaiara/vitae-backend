@@ -1,6 +1,48 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+const fastcsv = require("fast-csv");
+const fs = require("fs");
+
+exports.readCSV = async function (filename) {
+	let data = ''
+	return new Promise((resolve, reject) => {
+		fs.createReadStream(filename)
+			.pipe(fastcsv.parse({headers: true}))
+			.on('error', error => console.error(error))
+			.on('data', row => {
+				data = row
+			})
+			.on('finish', () => {
+				resolve(data)	
+			});
+	})
+}
+
+exports.exportToCSV = async function (tableName, filename, dataToCsv) {
+
+	const ws = fs.createWriteStream(filename);
+
+	const parseJson = JSON.parse(JSON.stringify(dataToCsv))
+	return new Promise((resolve, reject) => {
+		fastcsv
+		.write(parseJson, {headers: true})
+		.pipe(ws)
+		.on("finish", async function (res) {
+			const read = await exports.readCSV(filename)
+			resolve(read)
+		})
+	})
+
+	// fastcsv
+	// 	.write(parseJson, {headers: true})
+	// 	.pipe(ws)
+	// 	.on("finish", function (res) {
+	// 		console.log(`Postgres table ${tableName} exported to CSV file successfully.`);
+	// 	})
+	
+}
+
 exports.mapFields = function (id, idField, array, tableName) {
 	let i = 0;
 	var size = Object.keys(array).length;

@@ -5,6 +5,7 @@ const empresaData = require('../data/empresaData');
 const candidatoSelecionadoData = require('../data/candidatoSelecionadoData');
 const candidaturaData = require('../data/candidaturaData');
 const candidatoData = require('../data/candidatoData');
+const { exportToCSV, readCSV } = require('../utils/utils');
 
 exports.getAgendamentos = async function () {
 	return await agendamentoData.getAgendamentos();
