@@ -32,13 +32,12 @@ const exportRoutes = require('./route/exportRoutes')
 /**
  * CORS
  */
-// const remoteOrigin = 'https://app-sistema-vagas-frontend.herokuapp.com'
-const localOrigin = 'http://localhost:3000'
+const origin = 'https://app-sistema-vagas-frontend.herokuapp.com'
+// const localOrigin = 'http://localhost:3000'
 
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
-	res.header('Access-Control-Allow-Origin', localOrigin)
-	// res.header('Access-Control-Allow-Origin', remoteOrigin)
+	res.header('Access-Control-Allow-Origin', origin)
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Token')
 	next()
 })
