@@ -33,7 +33,7 @@ const exportRoutes = require('./route/exportRoutes')
  * CORS
  */
 const origin = 'https://app-sistema-vagas-frontend.herokuapp.com'
-// const localOrigin = 'http://localhost:3000'
+// const origin = 'http://localhost:3000'
 
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
@@ -104,6 +104,9 @@ app.use(function (error, req, res, next) {
 			code = 500
 			break;
 		case 'Esse e-mail já foi cadastrado, use outro.':
+			code = 401
+			break;
+		case 'Senha inválida!':
 			code = 401
 			break;
 		case 'Usuário não encontrado':

@@ -11,13 +11,14 @@ exports.getExperiencia = async function (id) {
 exports.saveExperiencia = async function (id, experiencias) {
 	let experienciaResponse = '';
 	let experienciaResponses = [];
-	if (experiencias && experiencias.length > 0) {
+	if (experiencias && experiencias.length > 1) {
 		for (const experiencia of experiencias) {
 			experienciaResponse = await experienciaData.saveExperiencia(id, experiencia);
 			experienciaResponses.push(experienciaResponse[0]);
 		}
-	} else {
-		experienciaResponses = await experienciaData.saveExperiencia(id, experiencias);
+	} else if (experiencias.length > 0) {
+		const experiencia = Array.isArray(experiencias) ? experiencias[0] : experiencias
+		experienciaResponses = await experienciaData.saveExperiencia(id, experiencia);
 	}
 	return experienciaResponses;
 }

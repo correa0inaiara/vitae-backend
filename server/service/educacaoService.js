@@ -11,13 +11,14 @@ exports.getEducacaoById = async function (id) {
 exports.saveEducacao = async function (id, educacaoArr) {
 	let educacaoResponse = '';
 	let educacaoResponses = [];
-	if (educacaoArr && educacaoArr.length > 0) {
+	if (educacaoArr && educacaoArr.length > 1) {
 		for (const educacao of educacaoArr) {
 			educacaoResponse = await educacaoData.saveEducacao(id, educacao);
 			educacaoResponses.push(educacaoResponse[0]);
 		}
-	} else {
-		educacaoResponses = await educacaoData.saveEducacao(id, educacaoArr);
+	} else if (educacaoArr.length > 0) {
+		const educacao = Array.isArray(educacaoArr) ? educacaoArr[0] : educacaoArr
+		educacaoResponses = await educacaoData.saveEducacao(id, educacao);
 	}
 	return educacaoResponses;
 }

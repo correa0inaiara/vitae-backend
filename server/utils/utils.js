@@ -33,13 +33,6 @@ exports.exportToCSV = async function (tableName, filename, dataToCsv) {
 			resolve(read)
 		})
 	})
-
-	// fastcsv
-	// 	.write(parseJson, {headers: true})
-	// 	.pipe(ws)
-	// 	.on("finish", function (res) {
-	// 		console.log(`Postgres table ${tableName} exported to CSV file successfully.`);
-	// 	})
 	
 }
 

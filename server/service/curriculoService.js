@@ -85,8 +85,8 @@ exports.saveCurriculo = async function (usuarioId, data) {
 			curriculo[0].experiencias = experiencias
 			curriculo[0].habilidades = habilidades
 			curriculo[0].idiomas = idiomas
-			return curriculo
 	}
+	return curriculo
 	
 }
 

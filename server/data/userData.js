@@ -30,7 +30,7 @@ exports.getUserByEmail = async function (userEmail) {
 		const res = await database.query(text, values);
 		return res.rows;
 	} catch (error) {
-		return error.stack;
+		return error;
 	}
 }
 

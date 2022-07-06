@@ -11,13 +11,14 @@ exports.getCurso = async function (id) {
 exports.saveCurso = async function (id, cursos) {
 	let cursoResponse = '';
 	let cursosResponse = [];
-	if (cursos && cursos.length > 0) {
+	if (cursos && cursos.length > 1) {
 		for (const curso of cursos) {
 			cursoResponse = await cursoData.saveCurso(id, curso);
 			cursosResponse.push(cursoResponse[0]);
 		}
-	} else {
-		cursosResponse = await cursoData.saveCurso(id, cursos);
+	} else if (cursos.length > 0) {
+		const curso = Array.isArray(cursos) ? cursos[0] : cursos
+		cursosResponse = await cursoData.saveCurso(id, curso);
 	}
 	return cursosResponse;
 }

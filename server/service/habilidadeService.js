@@ -11,13 +11,14 @@ exports.getHabilidade = async function (id) {
 exports.saveHabilidade = async function (id, habilidades) {
 	let habilidadeResponse = '';
 	let habilidadesResponse = [];
-	if (habilidades && habilidades.length > 0) {
+	if (habilidades && habilidades.length > 1) {
 		for (const habilidade of habilidades) {
 			habilidadeResponse = await habilidadeData.saveHabilidade(id, habilidade);
 			habilidadesResponse.push(habilidadeResponse[0]);
 		}
-	} else {
-		habilidadesResponse = await habilidadeData.saveHabilidade(id, habilidades);
+	} else if (habilidades.length > 0) {
+		const habilidade = Array.isArray(habilidades) ? habilidades[0] : habilidades
+		habilidadesResponse = await habilidadeData.saveHabilidade(id, habilidade);
 	}
 	return habilidadesResponse;
 }
