@@ -90,13 +90,14 @@ exports.getVaga = async function (empresaId) {
 							const questionarioObj = item.questionario
 							questionariosArr.push({
 								nome: questionarioObj.nome,
-								questionarioId: questionarioObj.questionarioid
+								questionarioId: questionarioObj.questionarioid,
+								questoes: questionarioObj.questoes
 							})
 						})
 						
 						const questionario = questionariosArr.find(item3 => item.questionarioid === item3.questionarioId)
 
-						item.questionario = questionario.nome
+						item.questionario = questionario
 					}
 				}
 
@@ -134,14 +135,12 @@ exports.updateVaga = async function (id, vaga) {
 }
 
 exports.deleteVaga = async function (vagaId) {
-	const vaga = await vagaData.deleteVaga(vagaId);
-	const newResult = await beneficioOferecidoData.getBeneficioOferecido(vagaId)
-	
-	if (newResult && newResult.length > 0) {
-		newResult.map(async item => {
-			const excludeResult = await beneficioOferecidoData.deleteBeneficioOferecido(item.beneficiosoferecidosid)
-		})
+	const beneficiosOferecidos = await Promise.all([beneficioOferecidoData.deleteBeneficiosOferecidosByVaga(vagaId)])
+
+	let vaga = []
+	if (beneficiosOferecidos) {
+		vaga = await vagaData.deleteVaga(vagaId);
 	}
 
-	return []
+	return vaga
 }

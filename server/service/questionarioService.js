@@ -54,11 +54,11 @@ exports.updateQuestionario = async function (questionarioId, data) {
 	let updateQuestoes = []
 	if (questoesArr && questoesArr.length > 0) {
 		questoesArr.map(async item => {
-			if (item.questoesId) {
+			if (item.questoesid) {
 				let obj = {
 					questao: item.questao
 				}
-				const questoes = await questaoService.updateQuestao(item.questoesId, obj)
+				const questoes = await questaoService.updateQuestao(item.questoesid, obj)
 			}
 		})
 	}
@@ -76,7 +76,7 @@ exports.updateQuestionario = async function (questionarioId, data) {
 	let delQuestoes = []
 	if (questoesExcluidas && questoesExcluidas.length > 0) {
 		questoesExcluidas.map(async item => {
-			const result = await questaoService.deleteQuestao(item.questoesId);
+			const result = await questaoService.deleteQuestao(item.questoesid);
 		})
 	}
 

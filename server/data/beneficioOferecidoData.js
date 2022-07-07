@@ -50,6 +50,17 @@ exports.updateBeneficioOferecido = async function(id, body) {
 	}
 }
 
+exports.deleteBeneficiosOferecidosByVaga = async function (vagaId) {
+	const text = "DELETE FROM beneficiosOferecidos WHERE vagaId = $1;"
+	const values = [vagaId]
+	try {
+		const res = await database.query(text, values);
+		return res.rows;
+	} catch (error) {
+		return error.stack;
+	}
+}
+
 exports.deleteBeneficioOferecido = async function (id) {
 	const text = "DELETE FROM beneficiosOferecidos WHERE beneficiosoferecidosid = $1;"
 	const values = [id]
