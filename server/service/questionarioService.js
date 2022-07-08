@@ -7,7 +7,21 @@ exports.getQuestionarios = async function () {
 }
 
 exports.getQuestionarioById = async function (questionarioId) {
-	return await questionarioData.getQuestionarioById(questionarioId);
+	if (!questionarioId) return null
+	
+	const questionarioResult = await questionarioData.getQuestionarioById(questionarioId);
+	if (questionarioResult && questionarioResult.length > 0) {
+		
+		const questionarioId = questionarioResult[0].questionarioid
+		const questionsResult = await questaoData.getQuestao(questionarioId);
+		
+		questionarioResult[0].questoes = questionsResult
+		
+		return questionarioResult
+
+	} else {
+		throw new Error('Erro no serviço getQuestionario')
+	}
 }
 
 exports.getQuestionario = async function (empresaId) {

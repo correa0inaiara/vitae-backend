@@ -2,8 +2,10 @@ const vagaData = require('../data/vagaData');
 const beneficioOferecidoData = require('../data/beneficioOferecidoData');
 const tiposContratacaoEBeneficiosService = require('../service/tiposContratacaoEBeneficiosService')
 const questionarioService = require('../service/questionarioService');
-const { getEmpresa } = require('./empresaService');
+const candidaturaService = require('../service/candidaturaService');
 const { getEmpresaById } = require('../data/empresaData');
+const { getCandidato } = require('./candidatoService');
+const { getQuestionarioById } = require('../service/questionarioService');
 
 exports.getVagas = async function () {
 	const vagaResult = await vagaData.getVagas();
@@ -119,6 +121,47 @@ exports.getVaga = async function (empresaId) {
 		}
 	} else {
 		throw new Error('Erro no serviço getVaga')
+	}
+}
+
+exports.getVagaCandidaturaById = async function (vagaId, usuarioId) {
+	const vagaResult = await vagaData.getVagaById(vagaId);
+	if (vagaResult && vagaResult.length === 1) {
+		const result = await Promise.all(vagaResult.map(async item => {
+
+			const candidato = await getCandidato(usuarioId)
+
+			const beneficiosOferecidosResult = await beneficioOferecidoData.getBeneficioOferecido(item.vagaid);
+			item.beneficiosOferecidos = beneficiosOferecidosResult
+
+			const tiposContratacaoEBeneficios = await tiposContratacaoEBeneficiosService.getTiposContratacaoEBeneficiosService(item.vagaid);
+			
+			const tiposContratacao = tiposContratacaoEBeneficios.tiposContratacao
+
+			const contratacao = tiposContratacao.find(item2 => item.tipocontratacaoid === item2.tipocontratacaoid)
+
+			item.tipoContratacao = contratacao
+
+			const questionario = await getQuestionarioById(item.questionarioid)
+			item.questionario = (questionario && questionario.length === 1) ? questionario[0] : questionario
+
+			const empresa = await getEmpresaById(item.empresaid)
+			item.empresa = empresa
+
+			const candidaturas = await candidaturaService.getCandidaturaByCandidato(candidato[0].candidatoid);
+
+			let candidatura = null
+			if (candidaturas && candidaturas.length > 0) {
+				candidatura = candidaturas.find(item => item.vagaid == vagaId)
+			}
+
+			item.candidatura = candidatura ? candidatura : null
+
+			return item
+		}))
+		return result
+	} else {
+		throw new Error('Erro no serviço getVagaById')
 	}
 }
 

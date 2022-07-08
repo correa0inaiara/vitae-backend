@@ -22,6 +22,17 @@ exports.getQuestao = async function (questionarioId) {
 	}
 }
 
+exports.getQuestaoById = async function (questoesId) {
+	const text = "SELECT * FROM questoes WHERE questoesId = $1;"
+	const values = [questoesId]
+	try {
+		const res = await database.query(text, values);
+		return res.rows;
+	} catch (error) {
+		return error.stack;
+	}
+}
+
 exports.saveQuestao = async function (questionarioId, questao) {
 	const text = "INSERT INTO questoes (questionarioId, questao) VALUES ($1, $2) returning *"
 	const values = [questionarioId, questao.questao];

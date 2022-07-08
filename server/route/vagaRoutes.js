@@ -23,6 +23,22 @@ router.get('/:id', async function (req, res, next) {
 			const decode = isAutenticated(req.headers.token)
 			if (decode) {
 				const id = req.params.id;
+				const usuarioId = req.query.usuarioId
+				const vaga = await vagaService.getVagaCandidaturaById(id, usuarioId);
+				res.status(200).json(vaga);
+			} else res.status(401).json({message: 'Falha na autenticação.'});
+		} else  res.status(401).json({message: 'Usuário não pode ser autenticado.'});
+	} catch (error) {
+		next(error)
+	}
+});
+
+router.get('/empresa/:id', async function (req, res, next) {
+	try {
+		if (req.headers.token) {
+			const decode = isAutenticated(req.headers.token)
+			if (decode) {
+				const id = req.params.id;
 				const vaga = await vagaService.getVaga(id);
 				res.status(200).json(vaga);
 			} else res.status(401).json({message: 'Falha na autenticação.'});

@@ -23,6 +23,21 @@ router.get('/:id', async function (req, res, next) {
 			const decode = isAutenticated(req.headers.token)
 			if (decode) {
 				const id = req.params.id;
+				const empresa = await empresaService.getEmpresaById(id);
+				res.status(200).json(empresa);
+			} else res.status(401).json({message: 'Falha na autenticação.'});
+		} else  res.status(401).json({message: 'Usuário não pode ser autenticado.'});
+	} catch (error) {
+		next(error)
+	}
+});
+
+router.get('/usuario/:id', async function (req, res, next) {
+	try {
+		if (req.headers.token) {
+			const decode = isAutenticated(req.headers.token)
+			if (decode) {
+				const id = req.params.id;
 				const empresa = await empresaService.getEmpresa(id);
 				res.status(200).json(empresa);
 			} else res.status(401).json({message: 'Falha na autenticação.'});

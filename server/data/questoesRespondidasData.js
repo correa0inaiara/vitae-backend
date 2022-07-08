@@ -11,6 +11,17 @@ exports.getQuestoesRespondidas = async function () {
 	}
 }
 
+exports.getQuestaoRespondidaByQuestionario = async function (questionarioId) {
+	const text = "SELECT * FROM questoesRespondidas WHERE questionarioId = $1;"
+	const values = [questionarioId]
+	try {
+		const res = await database.query(text, values);
+		return res.rows;
+	} catch (error) {
+		return error.stack;
+	}
+}
+
 exports.getQuestaoRespondida = async function (questaoId) {
 	const text = "SELECT * FROM questoesRespondidas WHERE questoesId = $1;"
 	const values = [questaoId]
@@ -22,9 +33,9 @@ exports.getQuestaoRespondida = async function (questaoId) {
 	}
 }
 
-exports.saveQuestaoRespondida = async function (questaoId, questaoRespondida) {
-	const text = "INSERT INTO questoesRespondidas (questoesId, resposta) VALUES ($1, $2) returning *"
-	const values = [questaoId, questaoRespondida.resposta];
+exports.saveQuestaoRespondida = async function (questaoId, questionarioId, questaoRespondida) {
+	const text = "INSERT INTO questoesRespondidas (questionarioId, questoesId, resposta) VALUES ($1, $2, $3) returning *"
+	const values = [questionarioId, questaoId, questaoRespondida.resposta];
 
 	try {
 		const res = await database.query(text, values);

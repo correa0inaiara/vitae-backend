@@ -1,5 +1,5 @@
 const database = require('../infra/database')
-const { mapFields, handleDates } = require('../utils/utils');
+const { mapFields } = require('../utils/utils');
 
 exports.getVagas = async function () {
 	const text = "SELECT * FROM vagas;"

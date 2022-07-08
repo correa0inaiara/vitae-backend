@@ -4,6 +4,10 @@ exports.getEmpresas = async function () {
 	return await empresaData.getEmpresas();
 }
 
+exports.getEmpresaById = async function (id) {
+	return await empresaData.getEmpresaById(id);
+}
+
 exports.getEmpresa = async function (id) {
 	return await empresaData.getEmpresa(id);
 }
