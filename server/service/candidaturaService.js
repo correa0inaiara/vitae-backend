@@ -3,6 +3,8 @@ const candidatoData = require('../data/candidatoData');
 const curriculoData = require('../data/curriculoData');
 const curriculoService = require('../service/curriculoService');
 const vagaData = require('../data/vagaData');
+const { getQuestionarioById } = require('./questionarioService');
+const { getQuestaoRespondidaByQuestionario } = require('./questoesRespondidasService');
 
 exports.getCandidaturas = async function () {
 	return await candidaturaData.getCandidaturas();
@@ -32,6 +34,13 @@ exports.getCandidaturaById = async function (candidaturaId) {
 
 	const vaga = await vagaData.getVagaById(candidatura[0].vagaid)
 	candidatura[0].vaga = vaga[0]
+
+	if (vaga && vaga.length === 1) {
+		if (vaga[0].questionarioid) {
+			const questoesRespondidas = await getQuestaoRespondidaByQuestionario(vaga[0].questionarioid, candidato[0].usuarioid)
+			candidatura[0].questoesRespondidas = questoesRespondidas ? questoesRespondidas : []
+		}
+	}
 
 	return candidatura[0]
 }

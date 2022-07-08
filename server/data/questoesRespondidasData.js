@@ -11,9 +11,9 @@ exports.getQuestoesRespondidas = async function () {
 	}
 }
 
-exports.getQuestaoRespondidaByQuestionario = async function (questionarioId) {
-	const text = "SELECT * FROM questoesRespondidas WHERE questionarioId = $1;"
-	const values = [questionarioId]
+exports.getQuestaoRespondidaByQuestionario = async function (questionarioId, candidatoId) {
+	const text = "SELECT * FROM questoesRespondidas WHERE questionarioId = $1 and candidatoId = $2;"
+	const values = [questionarioId, candidatoId]
 	try {
 		const res = await database.query(text, values);
 		return res.rows;
@@ -33,9 +33,9 @@ exports.getQuestaoRespondida = async function (questaoId) {
 	}
 }
 
-exports.saveQuestaoRespondida = async function (questaoId, questionarioId, questaoRespondida) {
-	const text = "INSERT INTO questoesRespondidas (questionarioId, questoesId, resposta) VALUES ($1, $2, $3) returning *"
-	const values = [questionarioId, questaoId, questaoRespondida.resposta];
+exports.saveQuestaoRespondida = async function (questaoId, questionarioId, candidatoId, questaoRespondida) {
+	const text = "INSERT INTO questoesRespondidas (questionarioId, candidatoId, questoesId, resposta) VALUES ($1, $2, $3, $4) returning *"
+	const values = [questionarioId, candidatoId, questaoId, questaoRespondida.resposta];
 
 	try {
 		const res = await database.query(text, values);

@@ -23,7 +23,8 @@ router.get('/questionario/:id', async function (req, res, next) {
 			const decode = isAutenticated(req.headers.token)
 			if (decode) {
 				const id = req.params.id;
-				const questao = await questoesRespondidasService.getQuestaoRespondidaByQuestionario(id);
+				const usuarioId = req.query.usuarioId
+				const questao = await questoesRespondidasService.getQuestaoRespondidaByQuestionario(id, usuarioId);
 				res.status(200).json(questao);
 			} else res.status(401).json({message: 'Falha na autenticação.'});
 		} else  res.status(401).json({message: 'Usuário não pode ser autenticado.'});
@@ -53,7 +54,8 @@ router.post('/:id', async function (req, res, next) {
 		const id = req.params.id;
 		const body = req.body;
 		const questionarioId = req.query.questionarioId
-		const questao = await questoesRespondidasService.saveQuestaoRespondida(id, questionarioId, body);
+		const usuarioId = req.query.usuarioId
+		const questao = await questoesRespondidasService.saveQuestaoRespondida(id, questionarioId, usuarioId, body);
 		res.status(201).json(questao);
 	} catch (error) {
 		next(error)
