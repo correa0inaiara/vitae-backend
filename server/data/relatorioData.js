@@ -1,10 +1,12 @@
 const database = require('../infra/database')
 const { mapFields, handleDates } = require('../utils/utils');
 
+
 exports.getTotalUsuariosPorTipo = async function () {
-	const text = "SELECT tipousuario, count(*) FROM usuarios GROUP BY tipousuario;"
+	const text = "SELECT roleUsuario, count(*) FROM usuarios GROUP BY roleUsuario;"
 	try {
 		const res = await database.query(text);
+		console.log("res", res)
 		return res.rows;
 	} catch (error) {
 		return error.stack;
@@ -12,7 +14,17 @@ exports.getTotalUsuariosPorTipo = async function () {
 }
 
 exports.getTotalIdiomasPorNivel = async function () {
-	const text = "select idioma, nivel, count(*) from idiomas group by idioma, nivel order by idioma;"
+	// const text = "select idioma, nivel, count(*)::int from idiomas group by idioma, nivel order by idioma;"
+	const text = `
+		SELECT 
+			idioma,
+			SUM(CASE WHEN nivel='Básico' THEN 1 ELSE 0 END)::int AS basico,
+			SUM(CASE WHEN nivel='Intermediário' THEN 1 ELSE 0 END)::int AS intermediario,
+			SUM(CASE WHEN nivel='Avançado' THEN 1 ELSE 0 END)::int AS avancado
+		FROM idiomas 
+		GROUP BY idioma 
+		ORDER BY idioma;
+	`
 	try {
 		const res = await database.query(text);
 		return res.rows;
@@ -41,7 +53,7 @@ exports.getTotalEducacaoCursosExperienciasHabilidadesIdiomas = async function ()
 	}
 }
 
-exports.getTotalCurriculosQuestionariosVagasProcessosSeletivosAgendamentos = async function () {
+exports.getTotalCurriculosQuestionariosVagasProcessosSeletivosEntrevistas = async function () {
 	const text = `
 		select 'curriculos' as coluna, count(*) from curriculos
 		union
@@ -51,7 +63,7 @@ exports.getTotalCurriculosQuestionariosVagasProcessosSeletivosAgendamentos = asy
 		union
 		select 'processos seletivos', count(*) from processosseletivos
 		union
-		select 'agendamentos', count(*) from agendamentos
+		select 'entrevistas', count(*) from entrevistas
 	`
 	try {
 		const res = await database.query(text);
@@ -63,12 +75,12 @@ exports.getTotalCurriculosQuestionariosVagasProcessosSeletivosAgendamentos = asy
 
 exports.getTotalCandidatosPorEstado = async function () {
 	const text = `
-		select e.uf, count(*)
+		select e.estado, count(*)
 		from enderecos e
 		full join usuarios u
 		on e.usuarioid = u.usuarioid
-		where u.tipousuario = 'Candidato' and e.uf notnull 
-		group by e.uf;
+		where u.roleUsuario = 'Candidato' and e.estado notnull
+		group by e.estado;
 	`
 	try {
 		const res = await database.query(text);
@@ -80,12 +92,12 @@ exports.getTotalCandidatosPorEstado = async function () {
 
 exports.getTotalEmpresasPorEstado = async function () {
 	const text = `
-		select e.uf, count(*)
+		select e.estado, count(*)
 		from enderecos e
 		full join usuarios u
 		on e.usuarioid = u.usuarioid
-		where u.tipousuario = 'Empresa' and e.uf notnull 
-		group by e.uf;
+		where u.roleUsuario = 'Empresa' and e.estado notnull 
+		group by e.estado;
 	`
 	try {
 		const res = await database.query(text);

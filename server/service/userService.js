@@ -57,7 +57,7 @@ exports.saveUser = async function (user) {
 					}
 				}
 
-				if (usuario.tipoUsuario === 'Candidato') {
+				if (usuario.roleUsuario === 'Candidato') {
 					candidatoResult = await candidatoService.saveCandidato(usuarioId, candidato)
 
 					if (candidatoResult && candidatoResult.length > 0) {
@@ -83,8 +83,8 @@ exports.saveUser = async function (user) {
 		await userData.deleteUser(usuarioId)
 	} else {
 		if (
-			(usuario.tipoUsuario === 'Candidato' && !candidatoResult && candidatoResult.length === 0) ||
-			(usuario.tipoUsuario === 'Empresa' && !empresaResult && empresaResult.length === 0)
+			(usuario.roleUsuario === 'Candidato' && !candidatoResult && candidatoResult.length === 0) ||
+			(usuario.roleUsuario === 'Empresa' && !empresaResult && empresaResult.length === 0)
 		) {
 			await userData.deleteUser(usuarioId)
 		}

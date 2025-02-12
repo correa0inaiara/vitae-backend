@@ -14,7 +14,7 @@ select empresaid, count(*) from questionarios group by empresaid;
 -- ramos de empresas mais cadastrados
 select ramodaempresa , count(*) from empresas group by ramodaempresa order by count(*) desc;
 
--- vagas por localização
+-- vagas por localizaï¿½ï¿½o
 select localizacao, count(*) from vagas group by localizacao order by count(*) desc;
 
 -- conta a quantidade de cursos por curriculo
@@ -37,7 +37,7 @@ select 'habilidades' as habilidades, count(*) from habilidades
 union
 select 'idiomas' as habilidades, count(*) from idiomas;
 
--- conta total de curriculos, questionarios, vagas, processos seletivos e agendamentos
+-- conta total de curriculos, questionarios, vagas, processos seletivos e entrevistas
 select 'curriculos' as curriculos_questionarios_processosseletivos_questionarios_vagas, count(*) from curriculos
 union
 select 'questionarios', count(*) from questionarios

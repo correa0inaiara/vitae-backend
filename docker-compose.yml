@@ -1,0 +1,24 @@
+services:
+
+  postgres:
+    image: "postgres"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=root
+      - PGDATA=/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      - ./scripts/initialization/.:/docker-entrypoint-initdb.d/
+
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "email@email.com"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
+    ports:
+      - "54321:80"
+    depends_on:
+      - postgres

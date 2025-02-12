@@ -22,7 +22,7 @@ const beneficioOferecidoRoutes = require('./route/beneficioOferecidoRoutes')
 const candidaturasRoutes = require('./route/candidaturaRoutes')
 const candidatoSelecionadoRoutes = require('./route/candidatoSelecionadoRoutes')
 const processoSeletivoRoutes = require('./route/processoSeletivoRoutes')
-const agendamentoRoutes = require('./route/agendamentoRoutes')
+const entrevistaRoutes = require('./route/entrevistaRoutes')
 const loginRoutes = require('./route/loginRoutes')
 const relatorioRoutes = require('./route/relatorioRoutes')
 const tiposContratacaoEBeneficiosRoutes = require('./route/tiposContratacaoEBeneficiosRoutes')
@@ -32,8 +32,8 @@ const exportRoutes = require('./route/exportRoutes')
 /**
  * CORS
  */
-const origin = 'https://app-sistema-vagas-frontend.herokuapp.com'
-// const origin = 'http://localhost:3000'
+// const origin = 'https://app-sistema-vagas-frontend.herokuapp.com'
+const origin = 'http://localhost:3000'
 
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
@@ -68,7 +68,7 @@ app.use('/beneficiosoferecidos', beneficioOferecidoRoutes);
 app.use('/candidaturas', candidaturasRoutes);
 app.use('/candidatosselecionados', candidatoSelecionadoRoutes);
 app.use('/processosseletivos', processoSeletivoRoutes);
-app.use('/agendamentos', agendamentoRoutes);
+app.use('/entrevistas', entrevistaRoutes);
 app.use('/relatorios', relatorioRoutes);
 app.use('/tiposcontratacaoebeneficios', tiposContratacaoEBeneficiosRoutes);
 app.use('/export', exportRoutes);

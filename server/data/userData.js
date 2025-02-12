@@ -37,8 +37,8 @@ exports.getUserByEmail = async function (userEmail) {
 exports.saveUser = async function(user) {
 	try {
 		user.senha = await generateHashPassword(user.senha);
-		const text = "INSERT INTO usuarios (email, senha, tipoUsuario, loginSocial) VALUES ($1, $2, $3, $4) returning *"
-		const values = [user.email, user.senha, user.tipoUsuario, user.loginSocial]
+		const text = "INSERT INTO usuarios (email, senha, roleUsuario, loginSocial) VALUES ($1, $2, $3, $4) returning *"
+		const values = [user.email, user.senha, user.roleUsuario, user.loginSocial]
 		const res = await database.query(text, values);
 		return res.rows;
 	} catch (error) {

@@ -10,12 +10,18 @@ router.get('/:id', async function (req, res, next) {
 			if (decode) {
 				const recursoId = req.params.id;
 				const tableName = req.query.TableName;
-				const result = await exportService.getCSVFile(recursoId, tableName);
-				const path = "../csv/" + result.filename
+
+				if (tableName || recursoId) {
+					const result = await exportService.getCSVFile(recursoId, tableName);
 				
-				res.header('Content-Type', 'text/csv')
-				res.attachment(path);
-				res.status(200).send(result.data)
+					if (result.data.length > 0) {
+						const path = "../csv/" + result.filename
+					
+						res.header('Content-Type', 'text/csv')
+						res.attachment(path);
+						res.status(200).send(result.data)
+					} else res.status(404).json({message: result}); 
+				} else res.status(404).json({message: "É necessário informar o parâmetro TableName"});
 			} else res.status(401).json({message: 'Falha na autenticação.'});
 		} else  res.status(401).json({message: 'Usuário não pode ser autenticado.'});
 	} catch (error) {

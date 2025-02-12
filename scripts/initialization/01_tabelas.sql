@@ -37,9 +37,9 @@ create table administrador (
 
 create table usuarios (
 	usuarioID uuid primary key default uuid_generate_v4(),
-	email varchar(50) not null unique,
-	senha varchar(50) not null,
-	tipoUsuario tipoUsuarioENUM not null
+	tipoUsuario tipoUsuarioENUM not null,
+	email varchar(100) not null unique,
+	senha varchar(100) not null
 );
 
 create table contatos (
@@ -53,11 +53,11 @@ create table enderecos (
 	enderecoID uuid primary key default uuid_generate_v4(),
 	usuarioID uuid not null,
 	cep character(9) not null,
-	logradouro varchar(50) not null,
+	logradouro varchar(100) not null,
 	complemento varchar(100),
 	numero character(10) not null,
-	bairro varchar(50) not null,
-	cidade varchar(50) not null,
+	bairro varchar(100) not null,
+	cidade varchar(100) not null,
 	estado estadoENUM not null,
 	pais varchar(50) default 'Brasil' not null
 );
@@ -74,7 +74,7 @@ create table empresas (
 	usuarioID uuid not null,
 	nomeDaEmpresa varchar(100) not null,
 	cnpj character(14) not null,
-	ramoDaEmpresa varchar(50) not null,
+	ramoDaEmpresa varchar(100) not null,
 	numeroDeFuncionarios int not null,
 	website varchar(100)
 );
@@ -100,22 +100,22 @@ create table curriculos (
 create table idiomas (
 	idiomaID uuid primary key default uuid_generate_v4(),
 	curriculoID uuid not null,
-	idioma varchar(20) not null,
+	idioma varchar(30) not null,
 	nivel nivelENUM not null
 );
 
 create table habilidades (
 	habilidadeID uuid primary key default uuid_generate_v4(),
 	curriculoID uuid not null,
-	habilidade varchar(50) not null,
+	habilidade varchar(200) not null,
 	nivel nivelENUM not null
 );
 
 create table educacao (
 	educacaoID uuid primary key default uuid_generate_v4(),
 	curriculoID uuid not null,
-	educacao varchar(50) not null,
-	localizacao varchar(50) not null,
+	educacao varchar(200) not null,
+	localizacao varchar(100) not null,
 	periodoInicial date not null,
 	periodoFinal date not null
 );
@@ -124,7 +124,7 @@ create table cursos (
 	cursoID uuid primary key default uuid_generate_v4(),
 	curriculoID uuid not null,
 	curso varchar(100) not null,
-	localizacao varchar(50) not null,
+	localizacao varchar(200) not null,
 	periodoInicial date not null,
 	periodoFinal date not null,
 	duracaoEmHoras numeric(3,0) not null 
@@ -139,13 +139,13 @@ create table experiencias (
 	empresa varchar(100) not null
 );
 
-create table agendamentos (
-	agendamentoID uuid primary key default uuid_generate_v4(),
+create table entrevistas (
+	entrevistaID uuid primary key default uuid_generate_v4(),
 	processoSeletivoID uuid not null,
 	candidatoSelecionadoID uuid not null,
 	dia date not null,
 	hora time not null,
-	localizacao varchar(50) not null
+	localizacao varchar(200) not null
 );
 
 create table vagas (
@@ -155,7 +155,7 @@ create table vagas (
 	questionarioID uuid not null,
 	nome varchar(100) not null,
 	descricao text not null,
-	localizacao varchar(50) not null,
+	localizacao varchar(200) not null,
 	salario money not null,
 	prazo timestamp not null,
 	status boolean not null
@@ -169,27 +169,14 @@ create table candidaturas (
 
 create table tiposContratacao (
 	tipoContratacaoID uuid primary key default uuid_generate_v4(),
-	contratacao varchar(30) not null
+	contratacao varchar(100) not null
 );
 
 create table beneficios (
 	beneficioID uuid primary key default uuid_generate_v4(),
-	beneficio varchar(30) not null,
+	beneficio varchar(100) not null,
 	obrigatorio boolean default true not null
 );
-
---create table test (
---	id uuid primary key default uuid_generate_v4(),
---	test text
---);
---insert into test (test) values ('1');
---insert into test (test) values ('2');
---insert into test (test) values ('3');
---insert into test (test) values ('4');
---insert into test (test) values ('5');
---
---delete from test where id = '480a1492-2b48-4b74-9a27-d41e3efa1a79';
---alter table tiposContratacao alter column tipoContratacaoID set data type uuid using(uuid_generate_v4());
 
 create table beneficiosOferecidos (
 	beneficiosOferecidosID uuid primary key default uuid_generate_v4(),
@@ -201,7 +188,7 @@ create table processosSeletivos (
 	processoSeletivoID uuid primary key default uuid_generate_v4(),
 	vagaID uuid not null,
 	empresaID uuid not null,
-	nome varchar(30) not null,
+	nome varchar(100) not null,
 	descricao text not null
 );
 
@@ -214,7 +201,7 @@ create table candidatosSelecionados (
 create table questionarios (
 	questionarioID uuid primary key default uuid_generate_v4(),
 	empresaID uuid not null,
-	nome varchar(30) not null,
+	nome varchar(100) not null,
 	descricao text not null,
 	prazo timestamp
 );
@@ -363,12 +350,12 @@ alter table candidatosSelecionados
 	foreign key (processoSeletivoID)
 	references processosSeletivos (processoSeletivoID);
 
-alter table agendamentos
+alter table entrevistas
 	add constraint fk_processoSeletivo
 	foreign key (processoSeletivoID)
 	references processosSeletivos (processoSeletivoID);
 
-alter table agendamentos
+alter table entrevistas
 	add constraint fk_candidatoSelecionado
 	foreign key (candidatoSelecionadoID)
 	references candidatosSelecionados (candidatoSelecionadoID);

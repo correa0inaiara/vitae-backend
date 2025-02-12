@@ -12,7 +12,7 @@ drop table if exists habilidades;
 drop table if exists experiencias;
 drop table if exists processosSeletivos;
 drop table if exists candidatosSelecionados;
-drop table if exists agendamentos;
+drop table if exists entrevistas;
 drop table if exists vagas;
 drop table if exists beneficios;
 drop table if exists beneficiosOferecidos;
@@ -95,10 +95,10 @@ alter table candidatosSelecionados
 alter table candidatosSelecionados
 	drop constraint if exists fk_processoSeletivo;
 
-alter table agendamentos
+alter table entrevistas
 	drop constraint if exists fk_processoSeletivo;
 
-alter table agendamentos
+alter table entrevistas
 	drop constraint if exists fk_candidatoSelecionado;
 
 alter table tiposContratacao alter column contratacao type varchar(50);

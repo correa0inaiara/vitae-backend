@@ -13,6 +13,7 @@ router.get('/', async function (req, res, next) {
 			} else res.status(401).json({message: 'Falha na autenticação.'});
 		} else  res.status(401).json({message: 'Usuário não pode ser autenticado.'});
 	} catch (error) {
+		console.log('error', error)
 		next(error)
 	}
 });

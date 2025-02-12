@@ -1,7 +1,7 @@
 insert into enderecos (
 	cep, logradouro, complemento, numero, bairro, cidade, estado, pais
 ) values (
-	'03253060', 'Rua Bet�nia', 'teste', 414, 'Vila Industrial', 'S�o Paulo', 'SP', 'Brasil'
+	'03253060', 'Rua Betânia', 'teste', 414, 'Vila Industrial', 'São Paulo', 'SP', 'Brasil'
 );
 
 insert into contatos (
@@ -18,9 +18,8 @@ insert into redesSociais (
 
 insert into logins (
 	email, senha
-) values (
-	'tesouraria@fernandoeisadoraalimentosltda.com.br', crypt('fernandoeisadoraalimentos', gen_salt('bf'))
-);
+) values 
+	('tesouraria@fernandoeisadoraalimentosltda.com.br', crypt('fernandoeisadoraalimentos', gen_salt('bf')));
 
 insert into empresas (
 	nomeDaEmpresa, cnpj, ramoDaEmpresa, numeroDeFuncionarios, 
@@ -30,7 +29,7 @@ insert into empresas (
 	login, 
 	website
 ) values (
-	'Fernando e Isadora Alimentos Ltda', '19473081000175', 'Ind�stria Aliment�cia', '2000',
+	'Fernando e Isadora Alimentos Ltda', '19473081000175', 'Indústria Alimentícia', '2000',
 	(select enderecoID from enderecos where enderecoID = 2),
 	(select contatoID from contatos where contatoID = 1),
 	(select redeSocialID from redesSociais where redeSocialID = 1),

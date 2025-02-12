@@ -24,7 +24,9 @@ router.get('/:id', async function (req, res, next) {
 			if (decode) {
 				const id = req.params.id;
 				const processoSeletivo = await processoSeletivoService.getProcessoSeletivo(id);
-				res.status(200).json(processoSeletivo);
+				if (processoSeletivo.length > 0) {
+					res.status(200).json(processoSeletivo);
+				} else res.status(404).json({message: 'ID inválido ou não existe.'});
 			} else res.status(401).json({message: 'Falha na autenticação.'});
 		} else  res.status(401).json({message: 'Usuário não pode ser autenticado.'});
 	} catch (error) {

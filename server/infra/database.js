@@ -7,10 +7,9 @@ const pool = new Pool({
   database: process.env.POSTGRES_DATABASE,
   password: process.env.POSTGRES_PASSWORD,
   port: process.env.POSTGRES_PORT,
-  ssl: {
-	  rejectUnauthorized: false
-  }
+  ssl: false
 })
+pool.connect()
 
 const client = new Client({
 	user: process.env.POSTGRES_USER,
@@ -22,12 +21,13 @@ const client = new Client({
 		rejectUnauthorized: false
 	}
 })
-client.connect()
+// client.connect()
 
 module.exports = {
 	query: (text, params, callback) => {
 	  try {
-		const query = client.query(text, params, callback)
+		const query = pool.query(text, params, callback)
+		// console.log('mode', process.env.NODE_ENV)
 		return query;
 	  } catch (error) {
 		  return error;

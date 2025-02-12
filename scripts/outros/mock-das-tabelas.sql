@@ -26,3 +26,26 @@ insert into tiposContratacao (contratacao) values ('Contrato de Trabalho Autonom
 insert into tiposContratacao (contratacao) values ('Contrato de Trabalho para Estagiario');
 insert into tiposContratacao (contratacao) values ('Contrato de Trabalho Trainee');
 insert into tiposContratacao (contratacao) values ('Contrato de Trabalho Jovem Aprendiz');
+
+-- Logins
+insert into administrador (email, senha) values ('admin@email.com', crypt('123456', gen_salt('bf')));
+-- insert into usuarios (tipoUsuario, email, senha) values ('Empresa', 'empresa1@email.com', crypt('123456', gen_salt('bf')));
+-- insert into usuarios (tipoUsuario, email, senha) values ('Candidato', 'candidato1@email.com', crypt('123456', gen_salt('bf')));
+
+-- Usuarios
+insert into usuarios (tipoUsuario, email, senha) values ('Candidato 1', 'candidato1@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Candidato 2', 'candidato2@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Candidato 3', 'candidato3@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Candidato 4', 'candidato4@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Candidato 5', 'candidato5@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Candidato 6', 'candidato6@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Candidato 7', 'candidato7@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Candidato 8', 'candidato8@email.com', crypt('123', gen_salt('bf')))
+
+insert into usuarios (tipoUsuario, email, senha) values ('Empresa 1', 'empresa1@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Empresa 2', 'empresa2@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Empresa 3', 'empresa3@email.com', crypt('123', gen_salt('bf')))
+insert into usuarios (tipoUsuario, email, senha) values ('Empresa 4', 'empresa4@email.com', crypt('123', gen_salt('bf')))
+
+-- Contatos
+insert into contatos (usuarioId, tipoContato, contato) values ()

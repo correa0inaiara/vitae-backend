@@ -2,15 +2,15 @@
 create extension if not exists pgcrypto;
 
 -- Checks
-drop table if exists administrador;
-drop table if exists empresas;
-drop table if exists candidatos;
---drop table if exists usuarios;
-drop table if exists enderecos;
-drop table if exists contatos;
-drop table if exists logins;
-drop table if exists redesSociais;
-drop type if exists estadoENUM;
+-- drop table if exists administrador;
+-- drop table if exists empresas;
+-- drop table if exists candidatos;
+-- --drop table if exists usuarios;
+-- drop table if exists enderecos;
+-- drop table if exists contatos;
+-- drop table if exists logins;
+-- drop table if exists redesSociais;
+-- drop type if exists estadoENUM;
 
 -- Enums
 create type estadoENUM as enum (
@@ -151,8 +151,8 @@ alter table contatos
 
 -- Inserts
 insert into administrador (email, senha) values (
-	'1224438@sga.pucminas.br', 
-	crypt('1224438', gen_salt('bf'))
+	'admin@email.com', 
+	crypt('123456', gen_salt('bf'))
 );
 
 -- Selects

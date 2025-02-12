@@ -13,44 +13,39 @@ exports.getVagas = async function () {
 	if (vagaResult) {
 		if (vagaResult.length > 0) {
 			const result = await Promise.all(vagaResult.map(async item => {
-				const empresa = await getEmpresaById(item.empresaid)
-
-				const beneficiosOferecidosResult = await beneficioOferecidoData.getBeneficioOferecido(item.vagaid);
-
-				const tiposContratacaoEBeneficios = await tiposContratacaoEBeneficiosService.getTiposContratacaoEBeneficiosService(item.vagaid);
 				
-				const tiposContratacao = tiposContratacaoEBeneficios.tiposContratacao
-
-				const contratacao = tiposContratacao.find(item2 => item.tipocontratacaoid === item2.tipocontratacaoid)
-
-				item.tipoContratacao = contratacao.contratacao
-
 				if (item.questionarioid) {
-					const questionarios = await questionarioService.getQuestionario(item.empresaid);
-
-					if (questionarios && questionarios.length > 0) {
-						let questionariosArr = []
-						questionarios.map(item => {
-							const questionarioObj = item
-							questionariosArr.push({
-								nome: questionarioObj.questionario.nome,
-								questionarioId: questionarioObj.questionario.questionarioid,
-								questoes: questionarioObj.questoes
-							})
-						})
-						
-						const questionario = questionariosArr.find(item3 => item.questionarioid === item3.questionarioId)
-		
-						item.questionario = questionario
+					const questionario = {
+						nome: item.nome_questionario,
+						descricao: item.descricao_questionario,
+						prazo: item.prazo_questionario,
+						questionarioId: item.questionarioid,
+						perguntas: item.perguntas
 					}
+					
+					item.questionario = questionario
 				}
 
-				if (beneficiosOferecidosResult) {
+				if (item.beneficios) {
 					vagaCompleto.push(
 						{
-							empresa: empresa[0],
-							vaga: item,
-							beneficiosOferecidos: beneficiosOferecidosResult
+							empresa: {
+								'nomedaempresa': item.nomedaempresa,
+								'cnpj': item.cnpj,
+								'ramodaempresa': item.ramodaempresa,
+								'numerodefuncionarios': item.numerodefuncionarios,
+								'website': item.website
+							},
+							vaga: {
+								'nome': item.nome,
+								'descricao': item.descricao,
+								'contratacao': item.contratacao,
+								'localizacao': item.localizacao,
+								'salario': item.salario,
+								'prazo': item.prazo_vaga,
+								'status': item.status
+							},
+							beneficiosOferecidos: item.beneficios
 						}
 					)
 				} else {
@@ -67,47 +62,93 @@ exports.getVagas = async function () {
 	}
 }
 
-exports.getVaga = async function (empresaId) {
+exports.getVaga = async function (vagaId) {
+	const vagaResult = await vagaData.getVaga(vagaId);
+	let vagaCompleto = []
+	if (vagaResult) {
+		if (vagaResult.length > 0) {
+			const result = await Promise.all(vagaResult.map(async item => {
+				
+				if (item.questionarioid) {
+					const questionario = {
+						nome: item.nome_questionario,
+						descricao: item.descricao_questionario,
+						prazo: item.prazo_questionario,
+						questionarioId: item.questionarioid,
+						perguntas: item.perguntas
+					}
+					
+					item.questionario = questionario
+				}
+
+				if (item.beneficios) {
+					vagaCompleto.push(
+						{
+							empresa: {
+								'nomedaempresa': item.nomedaempresa,
+								'cnpj': item.cnpj,
+								'ramodaempresa': item.ramodaempresa,
+								'numerodefuncionarios': item.numerodefuncionarios,
+								'website': item.website
+							},
+							vaga: {
+								'nome': item.nome,
+								'descricao': item.descricao,
+								'contratacao': item.contratacao,
+								'localizacao': item.localizacao,
+								'salario': item.salario,
+								'prazo': item.prazo_vaga,
+								'status': item.status
+							},
+							beneficiosOferecidos: item.beneficios
+						}
+					)
+				} else {
+					throw new Error('Erro no serviço getBeneficioOferecido')
+				}
+				return vagaCompleto
+			}))
+			return vagaCompleto
+		} else {
+			return vagaResult
+		}
+	} else {
+		throw new Error('Erro no serviço getVaga')
+	}
+}
+
+exports.getVagaByEmpresaId = async function (empresaId) {
 	const vagaResult = await vagaData.getVaga(empresaId);
 	let vagaCompleto = []
 	if (vagaResult) {
 		if (vagaResult.length > 0) {
 			const result = await Promise.all(vagaResult.map(async item => {
-				const beneficiosOferecidosResult = await beneficioOferecidoData.getBeneficioOferecido(item.vagaid);
-
-				const tiposContratacaoEBeneficios = await tiposContratacaoEBeneficiosService.getTiposContratacaoEBeneficiosService(item.vagaid);
 				
-				const tiposContratacao = tiposContratacaoEBeneficios.tiposContratacao
-
-				const contratacao = tiposContratacao.find(item2 => item.tipocontratacaoid === item2.tipocontratacaoid)
-
-				item.tipoContratacao = contratacao.contratacao
-
 				if (item.questionarioid) {
-					const questionarios = await questionarioService.getQuestionario(empresaId);
-
-					if (questionarios && questionarios.length > 0) {
-						let questionariosArr = []
-						questionarios.map(item => {
-							const questionarioObj = item.questionario
-							questionariosArr.push({
-								nome: questionarioObj.nome,
-								questionarioId: questionarioObj.questionarioid,
-								questoes: questionarioObj.questoes
-							})
-						})
-						
-						const questionario = questionariosArr.find(item3 => item.questionarioid === item3.questionarioId)
-
-						item.questionario = questionario
+					const questionario = {
+						nome: item.nome_questionario,
+						descricao: item.descricao_questionario,
+						prazo: item.prazo_questionario,
+						questionarioId: item.questionarioid,
+						perguntas: item.perguntas
 					}
+					
+					item.questionario = questionario
 				}
 
-				if (beneficiosOferecidosResult) {
+				if (item.beneficios) {
 					vagaCompleto.push(
 						{
-							vaga: item,
-							beneficiosOferecidos: beneficiosOferecidosResult
+							vaga: {
+								'nome': item.nome,
+								'descricao': item.descricao,
+								'contratacao': item.contratacao,
+								'localizacao': item.localizacao,
+								'salario': item.salario,
+								'prazo': item.prazo_vaga,
+								'status': item.status
+							},
+							beneficiosOferecidos: item.beneficios
 						}
 					)
 				} else {
@@ -124,7 +165,7 @@ exports.getVaga = async function (empresaId) {
 	}
 }
 
-exports.getVagaCandidaturaById = async function (vagaId, usuarioId) {
+exports.getVagaByCandidatoId = async function (vagaId, usuarioId) {
 	const vagaResult = await vagaData.getVagaById(vagaId);
 	if (vagaResult && vagaResult.length === 1) {
 		const result = await Promise.all(vagaResult.map(async item => {

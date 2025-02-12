@@ -15,8 +15,7 @@ exports.getTiposContratacaoEBeneficiosService = async function () {
 	// 	})
 	// }
 	
-	const beneficios = await tiposContratacaoEBeneficiosData.
-	getBeneficios();
+	const beneficios = await tiposContratacaoEBeneficiosData.getBeneficios();
 	
 	// let beneficiosObrigatorios = []
 	// let beneficiosOpcionais = []

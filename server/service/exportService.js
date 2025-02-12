@@ -3,7 +3,7 @@ const curriculoData = require('../data/curriculoData');
 const questionarioData = require('../data/questionarioData');
 const processoSeletivosData = require('../data/processoSeletivoData');
 const vagasData = require('../data/vagaData');
-const agendamentoData = require('../data/agendamentoData');
+const entrevistaData = require('../data/entrevistaData');
 
 exports.getCSVFile = async function (recursoId, tableName) {
 
@@ -13,7 +13,7 @@ exports.getCSVFile = async function (recursoId, tableName) {
 			request = await curriculoData.getCurriculoById(recursoId);	
 			break;
 		case 'questionarios':
-			request = await questionarioData.getQuestionarioById(recursoId);	
+			request = await questionarioData.getQuestionarioById(recursoId);
 			break;
 		case 'processosseletivos':
 			request = await processoSeletivosData.getProcessoSeletivoById(recursoId);
@@ -21,24 +21,33 @@ exports.getCSVFile = async function (recursoId, tableName) {
 		case 'vagas':
 			request = await vagasData.getVagaById(recursoId);	
 			break;
-		case 'agendamentos':
-			request = await agendamentoData.getAgendamentoById(recursoId);	
+		case 'entrevistas':
+			request = await entrevistaData.getEntrevistaById(recursoId);	
 			break;
 		default:
 			break;
 	}
 
-	const dir = "server/csv"
-	const filename = `${tableName}-${recursoId}.csv`;
-	const filepath = `${dir}/${filename}`;
+	if (request.length > 0) {
+		const dir = "server/csv"
+		const filename = `${tableName}-${recursoId}.csv`;
+		const filepath = `${dir}/${filename}`;
+		
+		const read = await exportToCSV(tableName, filepath, request)
 	
-	const read = await exportToCSV(tableName, filepath, request)
-
-	// const read = await readCSV(filepath)
-
-	const result = {
-		filename,
-		data: read
+		// const read = await readCSV(filepath)
+	
+		const result = {
+			filename,
+			data: read
+		}
+		return result
+	} else {
+		const result = {
+			message: `ID ${recursoId} da tabela ${tableName} não é válido.`,
+			data: request
+		}
+		return result
 	}
-	return result
+
 }

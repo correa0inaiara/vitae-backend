@@ -6,14 +6,16 @@ const totalUsuarios = function(result) {
 	if (result && result.length > 0) {
 		result.map(item => {
 			const number = item.count ? Number(item.count) : item.count
-			if (item.tipousuario === 'Candidato') {
+			if (item.roleusuario === 'Candidato') {
 				data.candidatos = number
-			} else if (item.tipousuario === 'Empresa') {
+			} else if (item.roleusuario === 'Empresa') {
 				data.empresas = number
 			} else {
 				data.administrador = number
 			}
 		})
+	} else {
+		data = []
 	}
 	return data
 }
@@ -35,6 +37,8 @@ const totalCurriculos = function(result) {
 				data.idiomas = number
 			}
 		})
+	} else {
+		data = []
 	}
 	return data
 }
@@ -44,7 +48,7 @@ const totalEstados = function(result) {
 	if (result && result.length > 0) {
 		result.map((item, index) => {
 			const number = item.count ? Number(item.count) : item.count
-			switch (item.uf) {
+			switch (item.estado) {
 				case ufENUM.AC:
 					data[ufENUM.AC] = number
 					break;
@@ -128,6 +132,8 @@ const totalEstados = function(result) {
 					break;
 			}
 		})
+	} else {
+		data = []
 	}
 	return data
 }
@@ -137,8 +143,8 @@ const totalTabelas = function(result) {
 	if (result && result.length > 0) {
 		result.map((item, index) => {
 			const number = item.count ? Number(item.count) : item.count
-			if (item.coluna === 'agendamentos') {
-				data.agendamentos = number
+			if (item.coluna === 'entrevistas') {
+				data.entrevistas = number
 			} else if (item.coluna === 'questionarios') {
 				data.questionarios = number
 			} if (item.coluna === 'curriculos') {
@@ -149,6 +155,8 @@ const totalTabelas = function(result) {
 				data.processosSeletivos = number
 			}
 		})
+	} else {
+		data = []
 	}
 	return data
 }
@@ -162,9 +170,8 @@ exports.getRelatorios = async function () {
 	const totalEducacaoCursosExperienciasHabilidadesIdiomas = await relatorioData.getTotalEducacaoCursosExperienciasHabilidadesIdiomas();
 	const totalCurriculosData = totalCurriculos(totalEducacaoCursosExperienciasHabilidadesIdiomas)
 
-	const totalCurriculosQuestionariosVagasProcessosSeletivosAgendamentos = await relatorioData.getTotalCurriculosQuestionariosVagasProcessosSeletivosAgendamentos();
-	const totalTabelasData = totalTabelas(totalCurriculosQuestionariosVagasProcessosSeletivosAgendamentos)
-
+	const totalCurriculosQuestionariosVagasProcessosSeletivosEntrevistas = await relatorioData.getTotalCurriculosQuestionariosVagasProcessosSeletivosEntrevistas();
+	const totalTabelasData = totalTabelas(totalCurriculosQuestionariosVagasProcessosSeletivosEntrevistas)
 
 	const totalCandidatosPorEstado = await relatorioData.getTotalCandidatosPorEstado();
 	const totalEstadosCandidatosData = totalEstados(totalCandidatosPorEstado)
@@ -176,9 +183,10 @@ exports.getRelatorios = async function () {
 		totalUsuariosPorTipo: totalUsuariosData,
 		totalIdiomasPorNivel,
 		totalEducacaoCursosExperienciasHabilidadesIdiomas: totalCurriculosData,
-		totalCurriculosQuestionariosVagasProcessosSeletivosAgendamentos: totalTabelasData,
+		totalCurriculosQuestionariosVagasProcessosSeletivosEntrevistas: totalTabelasData,
 		totalCandidatosPorEstado: totalEstadosCandidatosData,
 		totalEmpresasPorEstado: totalEstadosEmpresasData
 	}
+	console.log("result /relatorios", result)
 	return result
 }
