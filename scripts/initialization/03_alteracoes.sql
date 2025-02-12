@@ -39,8 +39,8 @@ alter table avaliacaoQuestionario
   foreign key (candidaturaID)
   references candidaturas (candidaturaID);
 
-alter table entrevistas rename to entrevistas;
-alter table entrevistas rename column entrevistaID to entrevistaID;
+alter table agendamentos rename to entrevistas;
+alter table entrevistas rename column agendamentoID to entrevistaID;
 
 create table etapas (
   etapasID uuid primary key default uuid_generate_v4(),

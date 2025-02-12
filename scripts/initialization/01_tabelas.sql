@@ -139,8 +139,8 @@ create table experiencias (
 	empresa varchar(100) not null
 );
 
-create table entrevistas (
-	entrevistaID uuid primary key default uuid_generate_v4(),
+create table agendamentos (
+	agendamentoID uuid primary key default uuid_generate_v4(),
 	processoSeletivoID uuid not null,
 	candidatoSelecionadoID uuid not null,
 	dia date not null,
@@ -350,12 +350,12 @@ alter table candidatosSelecionados
 	foreign key (processoSeletivoID)
 	references processosSeletivos (processoSeletivoID);
 
-alter table entrevistas
+alter table agendamentos
 	add constraint fk_processoSeletivo
 	foreign key (processoSeletivoID)
 	references processosSeletivos (processoSeletivoID);
 
-alter table entrevistas
+alter table agendamentos
 	add constraint fk_candidatoSelecionado
 	foreign key (candidatoSelecionadoID)
 	references candidatosSelecionados (candidatoSelecionadoID);
