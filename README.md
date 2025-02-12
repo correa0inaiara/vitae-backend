@@ -5,6 +5,7 @@ Repositório do Backend Projeto Vitae - Sistemas de Vagas
 Esse projeto foi desenvolvido com Node e Express e o banco de dados escolhido foi o PostgreSQL.
 
 ### Estrutura do Projeto
+```
 -- database
 |
 -- server
@@ -32,6 +33,7 @@ Esse projeto foi desenvolvido com Node e Express e o banco de dados escolhido fo
 -- package-lock.json
 |
 -- package.json
+```
 
 - ./server/server.js
 O arquivo server.js contém o servidor do projeto, criado com Node e Express. Junto ao arquivo estão as regras CORS, as rotas da API e algumas codificações de mensagens para os HTTP Error Codes.
